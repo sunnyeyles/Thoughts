@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { getGtaData } from "./api/getGtaData";
 import "./App.css";
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
       console.error("Error fetching data:", error);
     }
   };
+  getGtaData();
 
   return (
     <div>
