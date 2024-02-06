@@ -1,6 +1,6 @@
 # routes.py
 from flask import jsonify, request
-from .apis import  get_record_by_year, add_user, add_post_to_database
+from .apis import  get_user_by_id, add_user, add_post_to_database
 
 def configure_routes(app):
     
@@ -9,25 +9,26 @@ def configure_routes(app):
     def get_home():
         return {"message": "Yo whatup, it's flask"}
     
-
     
-    @app.route("/api/by-year", methods=["GET"])
-    def get_data_by_year():
-        year = request.args.get('year', type=int)
-        if year is None:
-            return jsonify({'error': 'Year parameter is missing or not valid'}), 400
+    
+    # create new post
+    @app.route("/api/new-post", methods=["POST"])
+    def new_post():
+        data = request.get_json()
+        print("Looks like json but it's a dictionary",data)
+        # add_post_to_database(post_data)
+        return "Post Added successfully", 201
 
+
+
+    # get user by id
+    @app.route("/api/get-user/<user_id>", methods=["GET"])
+    def get_user_by_id():
+        user_id = request.args.get('user_id', type=int)
         records = get_record_by_year(year)
         return jsonify({'gta_records': records})
 
 
-    
-    @app.route("/api/new-post", methods=["POST"])
-    def new_post():
-        post_data = request.json
-        print(post_data)
-        add_post_to_database(post_data)
-        return "Post Added successfully", 201
 
     
     
