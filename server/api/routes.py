@@ -1,17 +1,16 @@
 # routes.py
 from flask import jsonify, request
+from .apis import  get_record_by_year, add_user, add_post_to_database
 
 def configure_routes(app):
-    from server.routes.apis import get_all_gta_records, get_record_by_year, add_user
-
-    @app.route("/api/data", methods=["GET"])
+    
+    # get all data from db
+    @app.route("/api/get_all", methods=["GET"])
     def get_home():
         return {"message": "Yo whatup, it's flask"}
+    
 
-    @app.route("/api/gta", methods=["GET"])
-    def get_data():
-        return get_all_gta_records()
-
+    
     @app.route("/api/by-year", methods=["GET"])
     def get_data_by_year():
         year = request.args.get('year', type=int)
@@ -21,8 +20,14 @@ def configure_routes(app):
         records = get_record_by_year(year)
         return jsonify({'gta_records': records})
 
-    @app.route("/api/add-user", methods=["POST"])
-    def new_user():
-        user = request.json
-        add_user(user)
-        return "User added successfully", 201
+
+    
+    @app.route("/api/new-post", methods=["POST"])
+    def new_post():
+        post_data = request.json
+        print(post_data)
+        add_post_to_database(post_data)
+        return "Post Added successfully", 201
+
+    
+    

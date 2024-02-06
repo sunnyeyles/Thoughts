@@ -33,6 +33,9 @@ def get_all_gta_records():
 def add_user(user):
     connection = sqlite3.connect("users.db")
     cursor = connection.cursor()
-
     cursor.execute("INSERT INTO users VALUES (?,?,?)", (user['email'], user['name'], user['city']))
     connection.close()
+
+
+def add_post_to_database(post):
+    print("Yo")
