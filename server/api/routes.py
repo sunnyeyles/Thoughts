@@ -10,7 +10,6 @@ def configure_routes(app):
         return {"message": "Yo whatup, it's flask"}
     
     
-    
     # create new post
     @app.route("/api/new-post", methods=["POST"])
     def new_post():
@@ -18,7 +17,6 @@ def configure_routes(app):
         print("Looks like json but it's a dictionary",data)
         # add_post_to_database(post_data)
         return "Post Added successfully", 201
-
 
 
     # get user by id
