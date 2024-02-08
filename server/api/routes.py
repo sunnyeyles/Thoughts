@@ -1,6 +1,6 @@
 # routes.py
 from flask import jsonify, request
-from .apis import  get_user_by_id, add_user, add_post_to_database
+from .apis import  get_user_by_id, add_user, add_post_to_database, get_post_from_db
 
 def configure_routes(app):
     
@@ -27,6 +27,15 @@ def configure_routes(app):
         return jsonify({'gta_records': records})
 
 
-
+    @app.route("/api/get-post-by-id", methods=["GET"])
+    def get_post_by_id():
+        post_id = request.args.get('id')
+        post = get_post_from_db(post_id)
+        if post:
+            return jsonify({"message": post})
+        else:
+            return jsonify({"error": "Post not found"}), 404
+            
+        
     
     

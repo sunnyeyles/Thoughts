@@ -1,44 +1,44 @@
-
 import sqlite3
 
-# Create the users table
-connection = sqlite3.connect("users.db")
-cursor = connection.cursor()
+def create_users_table():
+    connection = sqlite3.connect("users.db")
+    cursor = connection.cursor()
+    cursor.execute("CREATE TABLE IF NOT EXISTS users (user_id TEXT PRIMARY KEY, email TEXT, username TEXT, password TEXT)")
+    connection.commit()
+    connection.close()
 
-cursor.execute("CREATE TABLE users (user_id TEXT PRIMARY KEY, email TEXT, username TEXT, password TEXT)")
+def insert_users_data(user_data):
+    connection = sqlite3.connect("users.db")
+    cursor = connection.cursor()
+    cursor.executemany("INSERT INTO users VALUES (?, ?, ?, ?)", user_data)
+    connection.commit()
+    connection.close()
 
-user_data = [
-    ("sddfgsdfgsfgerergdf", "john@example.com", "JohnDoe", "Nevewvwek"),
-    ("dssadfreferf", "alice@example.com", "AliceSmith", "Sawerwrecsco"),
+def create_posts_table():
+    connection = sqlite3.connect("posts.db")
+    cursor = connection.cursor()
+    cursor.execute("CREATE TABLE IF NOT EXISTS posts (post_id TEXT PRIMARY KEY, post_body TEXT, image_url TEXT, user_id TEXT, FOREIGN KEY(user_id) REFERENCES users(user_id))")
+    connection.commit()
+    connection.close()
+    
+def insert_posts_data(post_data):
+    connection = sqlite3.connect("posts.db")
+    cursor = connection.cursor()
+    cursor.executemany("INSERT INTO posts VALUES (?, ?, ?, ?)", post_data)
+    connection.commit()
+    connection.close()
 
-]
+if __name__ == "__main__":
+    user_data = [
+        ("sddfgsdfgsfgerergdf", "john@example.com", "JohnDoe", "Nevewvwek"),
+        ("dssadfreferf", "alice@example.com", "AliceSmith", "Sawerwrecsco"),
+    ]
+    post_data = [
+        ("dsferfsdfvdsfesfsdr", "something somethiung bla ewfa bla","images/IMG_3943.JPG", "dsferfdsfer"),
+        ("dsfedfvrfdsfesdfr", "something somethiung bla bladsccsdcd bla","images/IMG_3943.JPG", "dsferfdsfer"),
+    ]
 
-# Insert data into the users table
-cursor.executemany("INSERT INTO users VALUES (?, ?, ?, ?)", user_data)
-
-# Commit the changes
-connection.commit()
-
-# Close the connection
-connection.close()
-
-# Create the posts table
-connection = sqlite3.connect("posts.db")
-cursor = connection.cursor()
-
-cursor.execute("CREATE TABLE posts (post_id TEXT PRIMARY KEY, post_body TEXT, user_id TEXT, FOREIGN KEY(user_id) REFERENCES users(user_id))")
-
-post_data = [
-    ("dsferfsdfvdsfesfsdr","something somethiung bla ewfa bla", "dsferfdsfer"),
-    ("dsfedfvrfdsfesdfr","something somethiung bla bladsccsdcd bla", "dsferfdsfer"),
-
-]
-
-# Insert data into the posts table
-cursor.executemany("INSERT INTO posts VALUES (?, ?, ?)", post_data)
-
-# Commit the changes
-connection.commit()
-
-# Close the connection
-connection.close()
+    create_users_table()
+    insert_users_data(user_data)
+    create_posts_table()
+    insert_posts_data(post_data)

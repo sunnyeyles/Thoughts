@@ -12,8 +12,11 @@ s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_k
 local_file_path = "/Users/sunnyeyles/Documents/projects/denny_sunny_todos/server/api/s3/IMG_3943.JPG"
 bucket_name = "why-are-there-so-many-bucket-naming-rules" 
 
-
+# s3 key is the path to where the file will be stored in the S3 bucket
+# we might want to add an id to the end of the file name to make it unique
 s3_key = "images/IMG_3943.JPG"
+
+
 
 try:
     s3.upload_file(local_file_path, bucket_name, s3_key)
