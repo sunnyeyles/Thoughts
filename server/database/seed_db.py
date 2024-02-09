@@ -1,11 +1,15 @@
 import sqlite3
 
+
 def create_users_table():
     connection = sqlite3.connect("users.db")
     cursor = connection.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS users (user_id TEXT PRIMARY KEY, email TEXT, username TEXT, password TEXT)")
+    cursor.execute(
+        "CREATE TABLE IF NOT EXISTS users (user_id TEXT PRIMARY KEY, email TEXT, username TEXT, password TEXT)"
+    )
     connection.commit()
     connection.close()
+
 
 def insert_users_data(user_data):
     connection = sqlite3.connect("users.db")
@@ -14,13 +18,17 @@ def insert_users_data(user_data):
     connection.commit()
     connection.close()
 
+
 def create_posts_table():
     connection = sqlite3.connect("posts.db")
     cursor = connection.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS posts (post_id TEXT PRIMARY KEY, post_body TEXT, image_url TEXT, user_id TEXT, FOREIGN KEY(user_id) REFERENCES users(user_id))")
+    cursor.execute(
+        "CREATE TABLE IF NOT EXISTS posts (post_id TEXT PRIMARY KEY, post_body TEXT, image_url TEXT, user_id TEXT, FOREIGN KEY(user_id) REFERENCES users(user_id))"
+    )
     connection.commit()
     connection.close()
-    
+
+
 def insert_posts_data(post_data):
     connection = sqlite3.connect("posts.db")
     cursor = connection.cursor()
@@ -28,14 +36,25 @@ def insert_posts_data(post_data):
     connection.commit()
     connection.close()
 
+
 if __name__ == "__main__":
     user_data = [
         ("sddfgsdfgsfgerergdf", "john@example.com", "JohnDoe", "Nevewvwek"),
         ("dssadfreferf", "alice@example.com", "AliceSmith", "Sawerwrecsco"),
     ]
     post_data = [
-        ("dsferfsdfvdsfesfsdr", "something somethiung bla ewfa bla","images/IMG_3943.JPG", "dsferfdsfer"),
-        ("dsfedfvrfdsfesdfr", "something somethiung bla bladsccsdcd bla","images/IMG_3943.JPG", "dsferfdsfer"),
+        (
+            "dsferfsdfvdsfesfsdr",
+            "something somethiung bla ewfa bla",
+            "images/IMG_3943.JPG",
+            "dsferfdsfer",
+        ),
+        (
+            "dsfedfvrfdsfesdfr",
+            "something somethiung bla bladsccsdcd bla",
+            "images/IMG_3943.JPG",
+            "dsferfdsfer",
+        ),
     ]
 
     create_users_table()

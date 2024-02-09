@@ -1,5 +1,6 @@
 import requests
 
+
 def test_sql_injection(url, payload):
     response = requests.post(url, data=payload)
 
@@ -8,13 +9,14 @@ def test_sql_injection(url, payload):
     else:
         print("No SQL injection vulnerability detected.")
 
+
 form_url = "http://localhost:5000/api/add-user"
 
 
 sql_injection_payload = {
     "email": "'; DROP TABLE users; --",
     "name": "John Doe",
-    "city": "New York"
+    "city": "New York",
 }
 
 test_sql_injection(form_url, sql_injection_payload)
