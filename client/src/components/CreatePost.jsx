@@ -1,24 +1,35 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import avatarPhoto from "../../dieter.jpeg";
-const imagePresent = true;
 import { createPost } from "../api/createPost";
 import { v4 as uuidv4 } from "uuid";
 
 export const CreatePost = () => {
   const [post, setPost] = useState("");
+  const [file, setFile] = useState(null);
   const [submittedData, setSubmittedData] = useState("");
 
   const handleChange = (e) => {
     setPost(e.target.value);
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   useEffect(() => {}, [submittedData]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmittedData(post);
-    createPost({ body: { post, userId: uuidv4() } });
+
+    try {
+      await createPost({ body: { post, userId: uuidv4(), file } });
+      console.log("Post submitted successfully");
+    } catch (error) {
+      console.error("Error submitting post:", error);
+    }
   };
+
   return (
     <div className="flex bg-slate-500 p-12 shadow-2xl">
       <div className="relative">
@@ -43,12 +54,27 @@ export const CreatePost = () => {
           ></path>
         </svg>
       </div>
-      <form action="submit" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input
           className="bg-slate-300 p-2"
           type="text"
           onChange={handleChange}
+          value={post}
         />
+
+        <label
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          htmlFor="file_input"
+        >
+          Upload file
+        </label>
+        <input
+          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+          id="file_input"
+          type="file"
+          onChange={handleFileChange}
+        />
+
         <button type="submit">Post</button>
       </form>
     </div>

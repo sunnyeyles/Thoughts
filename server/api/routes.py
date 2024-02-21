@@ -44,9 +44,9 @@ def configure_routes(app):
 
     @app.route("/api/create-post", methods=["POST"])
     def create_new_post():
-
         post_data = request.form.get("post")
         image_file = request.files.get("imageFile")
+        
         image_path = "./files" + secure_filename(image_file.filename)
         image_file.save(image_path)
         submit_post(image_path, post_data)
