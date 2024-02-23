@@ -7,7 +7,6 @@ export const CreatePost = () => {
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [submittedData, setSubmittedData] = useState("");
-
   const handleChange = (e) => {
     setPost(e.target.value);
   };
@@ -23,8 +22,7 @@ export const CreatePost = () => {
     setSubmittedData(post);
 
     try {
-      await createPost({ body: { post, userId: uuidv4(), file } });
-      console.log("Post submitted successfully");
+      await createPost({ post, userId: uuidv4(), file });
     } catch (error) {
       console.error("Error submitting post:", error);
     }

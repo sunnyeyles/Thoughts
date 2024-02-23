@@ -46,13 +46,13 @@ if __name__ == "__main__":
         (
             "dsferfsdreffewferffesfsdr",
             "something somethiung bla ewfa bla",
-            "images/IMG_3943.JPG",
+            "https://why-are-there-so-many-bucket-naming-rules.…naws.com/999bdf30-215c-49dd-bd38-ab11d4a67666.jpg",
             "dsferf343erf434dsfer",
         ),
         (
             "dsfederrffverfwgwfesdfr",
-            "something somethiung bla bladsccsdcd bla",
-            "images/IMG_3943.JPG",
+            "something something",
+            "https://why-are-there-so-many-bucket-naming-rules.…naws.com/999bdf30-215c-49dd-bd38-ab11d4a67666.jpg",
             "dsferfdsrewsdafq344rfer",
         ),
     ]
