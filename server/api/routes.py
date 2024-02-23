@@ -1,6 +1,6 @@
 # routes.py
 from flask import jsonify, request
-from .apis import get_user_by_id, add_user, add_post_to_database, get_post_from_db
+from .apis import get_user_by_id, add_user, get_all_posts_from_db
 from .create_post import submit_post
 from werkzeug.utils import secure_filename
 import os
@@ -11,19 +11,6 @@ import json
 
 
 def configure_routes(app):
-    # get all data from db
-    @app.route("/api/get_all", methods=["GET"])
-    def get_home():
-        return {"message": "Yo whatup, it's flask"}
-
-    # create new post
-    @app.route("/api/new-post", methods=["POST"])
-    def new_post():
-        data = request.args.get("id")
-
-        # add_post_to_database(post_data)
-        return "Post Added successfully", 201
-
     # get user by id
     @app.route("/api/get-user/<user_id>", methods=["GET"])
     def get_user_by_id():
@@ -44,12 +31,13 @@ def configure_routes(app):
 
     @app.route("/api/create-post", methods=["POST"])
     def create_new_post():
-        post_data = request.form.get("post")
-        image_file = request.files.get("imageFile")
-        
+        post_body = request.form.get("post")
+        image_file = request.files.get("file")
+        user_id = request.form.get("userId")
+   
         image_path = "./files" + secure_filename(image_file.filename)
         image_file.save(image_path)
-        submit_post(image_path, post_data)
+        submit_post(image_path, post_body, user_id)
 
         if image_file:
             return (
@@ -62,3 +50,11 @@ def configure_routes(app):
             )
         else:
             return jsonify({"error": "Image not found in the request"}), 400
+    
+    @app.route("/api/get-all-posts", methods=["GET"])
+    def get_all_posts():
+        all_posts = get_all_posts_from_db()
+        
+        return all_posts
+        
+    

@@ -1,22 +1,21 @@
 import axios from "axios";
-
-export const createPost = async (req) => {
+export const createPost = async (data) => {
   try {
-    const { body } = req;
-    console.log(body);
-    if (!body || !body.post || !body.userId) {
-      throw new Error("Invalid request body");
-    }
+    console.log(data);
+    // if (!body || !body.post || !body.userId) {
+    //   throw new Error("Invalid request body");
+    // }
 
-    const { post, userId, file } = body;
-    const formData = new FormData();
-    formData.append("post", post);
-    formData.append("userId", userId);
-    if (file) {
-      formData.append("imageFile", file);
-    }
+    // const { post, userId, file } = body;
+    // const formData = new FormData();
+    // formData.append("post", post);
+    // formData.append("userId", userId);
+    // if (file) {
+    //   formData.append("imageFile", file);
+    // }
+    // const {post, userId, file }
 
-    await axios.post("/api/create-post", formData, {
+    await axios.post("/api/create-post", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

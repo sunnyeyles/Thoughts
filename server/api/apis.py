@@ -5,8 +5,9 @@ import sqlite3
 def get_all_records():
     connection = sqlite3.connect("gta.db")
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM gta")
+    cursor.execute("SELECT * FROM posts")
     records = cursor.fetchall()
+    print(records)
     connection.close()
     return records
 
@@ -20,11 +21,6 @@ def get_user_by_id(year):
     return records
 
 
-def get_all_posts():
-    records = get_all_records()
-    return jsonify({"All posts": records})
-
-
 def add_user(user):
     connection = sqlite3.connect("users.db")
     cursor = connection.cursor()
@@ -34,47 +30,16 @@ def add_user(user):
     connection.close()
 
 
-def add_post_to_database(post):
-    connection = sqlite3.connect("posts.db")
-    cursor = connection.cursor()
-    # fix this
-    cursor.execute(
-        "INSERT INTO posts (?,?,?)", (user["email"], user["name"], user["city"])
-    )
 
-    print("Yo")
-
-
-def create_new_post(user_id, post_body, image):
+def get_all_posts_from_db():
     try:
-        posts_connection = sqlite3.connect("posts.db")
-        users_connection = sqlite3.connect("users.db")
-
-        posts_cursor = posts_connection.cursor()
-        users_cursor = users_connection.cursor()
-
-        posts_cursor.execute(
-            "INSERT INTO posts (post_body, image) VALUES (?, ?)", (post_body, image)
-        )
-        posts_connection.commit()
-
-        posts_connection.close()
-        users_connection.close()
-
-        return True
-    except Exception as e:
-        print(f"Error creating new post: {e}")
-        return False
-
-
-def get_post_from_db(post_id):
-    try:
-        connection = sqlite3.connect("posts.db")
+        
+        connection = sqlite3.connect("./database/posts.db")
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM posts WHERE post_id = ?", (post_id,))
-        post = cursor.fetchone()
+        cursor.execute("SELECT * FROM posts")
+        posts = cursor.fetchall()
         connection.close()
-        return post
+        return posts
     except Exception as e:
         print("Error:", e)
         return None
