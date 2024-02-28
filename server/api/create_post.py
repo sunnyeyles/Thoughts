@@ -23,6 +23,7 @@ def submit_post(image_path, post_body, user_id):
     S3_BUCKET_NAME = "why-are-there-so-many-bucket-naming-rules"  
     
     
+    
     if image_path:
         with open(image_path, "rb") as image_file:
             

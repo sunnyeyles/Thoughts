@@ -6,7 +6,6 @@ import avatarPhoto from "../../dieter.jpeg";
 export const Posts = () => {
   const [posts, setPosts] = useState([]);
 
-  console.log(posts);
   useEffect(() => {
     const fetchData = async () => {
       try {
