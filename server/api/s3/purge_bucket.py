@@ -20,7 +20,7 @@ def purge_bucket():
     all_objects = s3.list_objects(Bucket=S3_BUCKET_NAME)
     first_item_key, first_item_value = next(iter(all_objects.items()))
     for object in all_objects:
-        print(first_item_key, first_item_value)        
+        # print(first_item_key, first_item_value)        
     
 if __name__ == "__main__":
     purge_bucket()
